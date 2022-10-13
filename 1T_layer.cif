@@ -1,0 +1,54 @@
+
+#======================================================================
+# CRYSTAL DATA
+#----------------------------------------------------------------------
+data_VESTA_phase_1
+
+_chemical_name_common                  '1T\MoS2\small                         '
+_cell_length_a                         22.834000
+_cell_length_b                         6.670000
+_cell_length_c                         6.490000
+_cell_angle_alpha                      121.099998
+_cell_angle_beta                       88.379997
+_cell_angle_gamma                      106.470001
+_cell_volume                           803.195629
+_space_group_name_H-M_alt              'P 1'
+_space_group_IT_number                 1
+
+loop_
+_space_group_symop_operation_xyz
+   'x, y, z'
+
+loop_
+   _atom_site_label
+   _atom_site_occupancy
+   _atom_site_fract_x
+   _atom_site_fract_y
+   _atom_site_fract_z
+   _atom_site_adp_type
+   _atom_site_U_iso_or_equiv
+   _atom_site_type_symbol
+   S1         1.0     0.036380     0.205795     0.339351    Uiso  ? S
+   S2         1.0     0.195660     0.744778     0.603399    Uiso  ? S
+   S3         1.0     0.055629     0.733253     0.350893    Uiso  ? S
+   S4         1.0     0.176338     0.217221     0.591942    Uiso  ? S
+   S5         1.0     0.195660     0.244780     0.103408    Uiso  ? S
+   S6         1.0     0.036381     0.705794     0.839343    Uiso  ? S
+   S7         1.0     0.176338     0.717217     0.091945    Uiso  ? S
+   S8         1.0     0.055629     0.233255     0.850885    Uiso  ? S
+   S9         1.0     0.366396     0.255222     0.396601    Uiso  ? S
+   S10        1.0     0.525677     0.794206     0.660649    Uiso  ? S
+   S11        1.0     0.385719     0.782779     0.408058    Uiso  ? S
+   S12        1.0     0.506428     0.266747     0.649107    Uiso  ? S
+   S13        1.0     0.525676     0.294206     0.160657    Uiso  ? S
+   S14        1.0     0.366397     0.755220     0.896592    Uiso  ? S
+   S15        1.0     0.506428     0.766745     0.149115    Uiso  ? S
+   S16        1.0     0.385719     0.282783     0.908055    Uiso  ? S
+   Mo1        1.0     0.112064     0.998899     0.195112    Uiso  ? Mo
+   Mo2        1.0     0.120000     0.951632     0.747739    Uiso  ? Mo
+   Mo3        1.0     0.119999     0.451633     0.247740    Uiso  ? Mo
+   Mo4        1.0     0.112066     0.498904     0.695112    Uiso  ? Mo
+   Mo5        1.0     0.442057     0.048368     0.252261    Uiso  ? Mo
+   Mo6        1.0     0.449993     0.001101     0.804888    Uiso  ? Mo
+   Mo7        1.0     0.449991     0.501097     0.304888    Uiso  ? Mo
+   Mo8        1.0     0.442058     0.548367     0.752260    Uiso  ? Mo
