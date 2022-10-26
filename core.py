@@ -107,7 +107,7 @@ class Structure(object):
     USAGE
     get absolute coordinate as pdframe
     """
-    def coord(self):
+    def coord(self,direct=False):
         if self.filetype == 'vasp':
             at_num = list(map(int,self.filecontent[6]))
             at_type = dict(zip(self.filecontent[5],at_num))
@@ -135,7 +135,12 @@ class Structure(object):
                     count += 1
             coord = np.array(self.filecontent[count+1:])
             coord = pd.DataFrame(np.dot(coord[:,2:5].astype(float),self.lattice()),columns=['x','y','z'],index=[coord[:,-1]])
-        return coord
+        if direct == True:
+            coord_d = np.dot(coord,(np.linalg.inv(self.lattice())))
+            coord_d = pd.DataFrame(coord_d, columns=['x','y','z'], index=coord.index)
+            return coord_d
+        elif direct == False:
+            return coord
 
     """
     USAGE
@@ -166,8 +171,8 @@ class Structure(object):
     """
     USAGE
     """
-    def move(self,num_inp=False,dis_inp=False):
-        org_coord = self.coord()
+    def move(self,num_inp=False,dis_inp=False,direct_inp=False):
+        org_coord = self.coord(direct=direct_inp)
         num, dis = [], []
         if num_inp == False:
             num_inp = input("Input the atom number to move, eg:(1 2-10): ")  
