@@ -171,9 +171,10 @@ class Structure(object):
     """
     USAGE
     """
-    def move(self,num_inp=False,dis_inp=False,direct_inp=False):
-        org_coord = self.coord(direct=direct_inp)
+    def move(self,num_inp=False,dis_inp=False,direct=False):
+        org_coord = self.coord(direct=direct)
         num, dis = [], []
+        #input information
         if num_inp == False:
             num_inp = input("Input the atom number to move, eg:(1 2-10): ")  
         elif isinstance(num_inp,str):
@@ -187,7 +188,7 @@ class Structure(object):
             pass
         else:
             print ('Please correct the input atom numbers')
-
+        #moved atoms number and move distance 
         for i in num_inp.split(' '):
             if '-' in i:
                 for i in range(int(i.split('-')[0]),int(i.split('-')[1])+1):
@@ -196,11 +197,32 @@ class Structure(object):
                 num.append(int(i)-1)
         for i in dis_inp.split(' '):
             dis.append(float(i))
+        #move atoms
         move_coord = org_coord
         for i in num:
             move_coord.iloc[i] = org_coord.iloc[i]+dis
+        if direct:
+            move_coord = np.dot(move_coord,self.lattice())
+            move_coord = pd.DataFrame(move_coord, columns=['x','y','z'], index=org_coord.index)
+        elif not direct:
+            pass
         return move_coord
-
+"""    
+    def joint(self,coord1,coord2,lattice1,direction='x'):
+        joint_axis = input("Input the joint axisas x, y, z: ")
+        coord1[joint_axis] = coord1[joint_axis].apply(lambda x: x/2)
+        coord2[joint_axis] = coord2[joint_axis].apply(lambda x: x/2+0.5)
+        coord_new = pd.concat([coord1,coord2])
+        dic= {'x':0, 'y':1, 'z':2}
+        lattice1 = structure1.lattice()
+        lattice2 = structure1.lattice()
+        lattice_new = lattice1
+        lattice_new[dic[joint_axis]] = lattice1[dic[joint_axis]]+lattice2[dic[joint_axis]]
+        coord_newc = np.dot(coord_new,lattice_new)
+        coord_newc = pd.DataFrame(coord_newc, columns=['x','y','z'], index=coord_new.index)
+        structure = core.Writefile(coord=coord_newc,lattice=lattice_new)
+        structure.tovasp(outfile_name='POSCAR_joint',direct=True)
+"""
 
 """
 Use coord lattice or structure to generate POSCAR or xyz file
