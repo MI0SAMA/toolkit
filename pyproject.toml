@@ -20,7 +20,7 @@ viz = ["matplotlib", "seaborn"]
 ase = ["ase"]
 
 [project.scripts]
-tk = "toolkit.cli.main:main"
+tk = "toolkit.cli.main:entry"
 
 [tool.setuptools.package-dir]
 "toolkit" = "src/toolkit"

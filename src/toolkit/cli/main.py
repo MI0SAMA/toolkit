@@ -19,8 +19,8 @@ main.add_command(analyze)
 main.add_command(manipulate)
 
 
-def _entry():
-    """CLI entry point for interactive menu fallback."""
+def entry():
+    """CLI entry point. No args = interactive menu, args = click commands."""
     import sys
     if len(sys.argv) == 1:
         from toolkit.cli.menu import run_menu
@@ -30,4 +30,4 @@ def _entry():
 
 
 if __name__ == '__main__':
-    _entry()
+    entry()
