@@ -26,7 +26,7 @@ def density_profile(coord, lattice, axis='z', element=None,
     if vmin is None:
         vmin = np.floor(coord_subset.min())
     if vmax is None:
-        vmax = np.ceil(coord_subset.max())
+        vmax = np.ceil(coord_subset.max()) + interval
 
     bins = np.arange(vmin, vmax, interval)
     bin_labels = [
@@ -35,7 +35,7 @@ def density_profile(coord, lattice, axis='z', element=None,
     counts = pd.Series(0.0, index=bin_labels)
     for j, bin_start in enumerate(bins):
         bin_end = bin_start + interval
-        mask = (coord_subset > bin_start) & (coord_subset < bin_end)
+        mask = (coord_subset >= bin_start) & (coord_subset < bin_end)
         counts.iloc[j] = mask.sum()
 
     axis_idx = {'x': [1, 2], 'y': [0, 2], 'z': [0, 1]}

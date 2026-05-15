@@ -7,7 +7,11 @@ import itertools
 def _vec_angle(v1, v2):
     cos_a = np.inner(v1, v2)
     sin_a = np.linalg.norm(v1) * np.linalg.norm(v2)
-    return np.degrees(np.arccos(cos_a / sin_a))
+    if sin_a < 1e-12:
+        return 0.0
+    val = cos_a / sin_a
+    val = max(-1.0, min(1.0, val))
+    return np.degrees(np.arccos(val))
 
 
 def _surface_angle(angle):
@@ -81,8 +85,8 @@ def bond_angle_analysis(coord, lattice, period, main_ele='O', sub_ele='H',
 
         if len(close) == num_coord:
             idx0, idx1 = close.index[0], close.index[1]
-            normal_records['Distance1'].append(float(close.iloc[0]))
-            normal_records['Distance2'].append(float(close.iloc[1]))
+            normal_records['Distance1'].append(float(close.iloc[0, 0]))
+            normal_records['Distance2'].append(float(close.iloc[1, 0]))
 
             a1 = _vec_angle(sub_cart[idx0] - i, sub_cart[idx1] - i)
             normal_records['Bond'].append(a1)
