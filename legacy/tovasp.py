@@ -32,4 +32,5 @@ else:
     lattice_input = False
 
 structure = core.Writefile(sys.argv[1],lattice=lattice_input)
-structure.tovasp(outfile_name=sys.argv[2],direct=False)
+#print (structure.coord)		
+structure.tovasp(outfile_name=sys.argv[2],direct=True)

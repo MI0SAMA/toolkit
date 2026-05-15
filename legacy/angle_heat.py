@@ -27,8 +27,8 @@ if df_heat.sum().sum()==df_angle.shape[0]:
     plt.figure(figsize=(8, 6))
     g = sns.heatmap(df_heat, vmin=0, annot=True,  fmt='g', cmap='Blues', cbar=False, robust=True)
     plt.savefig(file_inp.split(".")[0]+'.png')
-# plt.show()
-#  print(getattr(row, 'Main_position').strip('[').strip(']').split( )[2])
+plt.show()
+# print(getattr(row, 'Main_position').strip('[').strip(']').split( )[2])
 # df1 = df.loc[:, ['Bond_Surface(deg)', 'Mid_Surface(deg)']]
 # print (df1)
 # df.loc[:, ['Bond_Surface(deg)']].hist(bins=100, color = "blue", grid =True, label = 'bond1', alpha=0.6)

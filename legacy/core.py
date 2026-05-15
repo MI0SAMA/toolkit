@@ -4,6 +4,8 @@ import pandas as pd
 from scipy import spatial
 import itertools
 import sys
+import warnings
+warnings.filterwarnings('ignore')
 
 """
 USAGE
@@ -207,22 +209,7 @@ class Structure(object):
         elif not direct:
             pass
         return move_coord
-"""    
-    def joint(self,coord1,coord2,lattice1,direction='x'):
-        joint_axis = input("Input the joint axisas x, y, z: ")
-        coord1[joint_axis] = coord1[joint_axis].apply(lambda x: x/2)
-        coord2[joint_axis] = coord2[joint_axis].apply(lambda x: x/2+0.5)
-        coord_new = pd.concat([coord1,coord2])
-        dic= {'x':0, 'y':1, 'z':2}
-        lattice1 = structure1.lattice()
-        lattice2 = structure1.lattice()
-        lattice_new = lattice1
-        lattice_new[dic[joint_axis]] = lattice1[dic[joint_axis]]+lattice2[dic[joint_axis]]
-        coord_newc = np.dot(coord_new,lattice_new)
-        coord_newc = pd.DataFrame(coord_newc, columns=['x','y','z'], index=coord_new.index)
-        structure = core.Writefile(coord=coord_newc,lattice=lattice_new)
-        structure.tovasp(outfile_name='POSCAR_joint',direct=True)
-"""
+
 
 """
 Use coord lattice or structure to generate POSCAR or xyz file
@@ -269,6 +256,8 @@ class Writefile(object):
     """
     def tovasp(self,outfile_name=False,direct=True):
         ele_type=self.coord.index.unique()
+        ele_type=[str(x).replace("('", '').replace("',)", '') for x in ele_type] 
+        #the index name can't be read correctly suddenly, I don't konw why but have to modify the name by myself!!!!!
         ele_dic={}
         for i in ele_type:
             ele_dic[i] = len(self.coord.loc[[i]])
@@ -353,7 +342,7 @@ class Analysis(Writefile):
         density_d = density_c/area/interval
         return density_c,density_d
         
-    def angle(self,period=False,main_ele='O',sub_ele='H',cutoff=1.1) -> pd.DataFrame:
+    def angle(self,period=False,main_ele='O',sub_ele='H',cutoff=1.1,num_coord=2) -> pd.DataFrame:
         def list_gen(x,y,z):
             alllist = []
             for max in (x,y,z):
@@ -400,7 +389,9 @@ class Analysis(Writefile):
             ext_coord.columns=['x','y','z']
             main_coord,sub_coord = ext_coord.loc[main_ele],ext_coord.loc[sub_ele]
             main_np = np.dot(df_area(main_coord,1/3,2/3).to_numpy(),ext_lattice)
-            sub_np = np.dot(df_area(sub_coord,0.3,0.7).to_numpy(),ext_lattice)
+            sub_np = np.dot(df_area(sub_coord,0.3,0.7).to_numpy(),ext_lattice) #!!!!!0.3~0.7 may not be save everytime
+            print (len(main_np))
+            print (len(sub_np))
             if len(main_np) == len(org_coord.loc[[main_ele]]):
                 pass
             else:
@@ -413,7 +404,7 @@ class Analysis(Writefile):
                 dist = spatial.distance.cdist(sub_np,[i],'euclidean')
                 dist = pd.DataFrame(dist,columns=['distence'])
                 dist = dist[dist['distence']<cutoff]
-                if len(dist.index) == 2:
+                if len(dist.index) == num_coord:
                     angle_dic1['Distence1(A)'].append(dist.iloc[0][0])
                     angle_dic1['Distence2(A)'].append(dist.iloc[1][0])
                     angle1 = vec_angle(sub_np[dist.index[0]]-i,sub_np[dist.index[1]]-i) #angle of sub-main-sub element
@@ -426,9 +417,10 @@ class Analysis(Writefile):
                         angle_dic1['Mid_Surface(deg)'].append(angle3)
                     i = half_coord(i,period)
                     angle_dic1['Main_position'].append(i)
-                elif len(dist.index) != 2:
+                elif len(dist.index) != num_coord:
                     i = half_coord(i,period)
                     angle_dic2['Main_position'].append(i)
+                    #Modify in 25/04/28, I don't konw what I were doing before
                     for j in sub_np[dist.index]:
                         save_list=[]
                         j = half_coord(j,period)

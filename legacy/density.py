@@ -44,12 +44,12 @@ if os.path.exists('cp2k.inp'):
                 lattice_input.append(y)
             break
 print ('Read lattice information from .inp file:',lattice_input)
-#default setting for density anlysis
+###   default setting for density anlysis   ###
 minz = 0
 maxz = 27
 intervalz = float(sys.argv[3])
-water_num = 64
-
+water_num = 66
+###   =====================++++++++++++++   ###
 a=1
 start_num = int(sys.argv[1])
 end_num = int(sys.argv[2])
@@ -69,6 +69,6 @@ print (all_d)
 all_d.to_csv('density_'+str(start_num).zfill(4)+'_'+str(end_num).zfill(4)+'_'+str(intervalz)+'.csv',index_label=False,header=None)
 all_d.plot(kind='line',marker='o',color='r')
 plt.savefig('density_'+str(start_num).zfill(4)+'_'+str(end_num).zfill(4)+'_'+str(intervalz)+'.png')
-plt.show()
+#plt.show()
 et = time.process_time()
 print ('Consumed time: ',et-st)

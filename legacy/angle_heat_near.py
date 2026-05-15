@@ -6,6 +6,11 @@ import sys
 import matplotlib.cm as cm
 import seaborn as sns
 
+"""
+USAGE
+python angle_heat_near.py angle_normal_*_*.csv position_start position_end
+"""
+
 list1=[-90,-20,20,90]
 list2=[-90,-50,50,90]
 file_inp = sys.argv[1]
