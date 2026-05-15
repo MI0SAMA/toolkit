@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "toolkit"
+version = "0.1.0"
+description = "Theoretical calculation toolkit for structure manipulation and analysis"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "click",
+    "questionary",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib", "seaborn"]
+ase = ["ase"]
+
+[project.scripts]
+tk = "toolkit.cli.main:main"
+
+[tool.setuptools.package-dir]
+"toolkit" = "src/toolkit"
